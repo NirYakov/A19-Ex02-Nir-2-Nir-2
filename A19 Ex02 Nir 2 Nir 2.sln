@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C7B5A462-DAF2-4166-B054-BC7DAF78C4FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormUI", "FaceBook UI\WinFormUI.csproj", "{F8A722EF-3BD9-4947-8F2D-B5F94C508132}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FB Logic", "FB Logic\FB Logic.csproj", "{85DB8A7A-FF59-481D-A7EE-C96A067A93F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8A722EF-3BD9-4947-8F2D-B5F94C508132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8A722EF-3BD9-4947-8F2D-B5F94C508132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8A722EF-3BD9-4947-8F2D-B5F94C508132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8A722EF-3BD9-4947-8F2D-B5F94C508132}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85DB8A7A-FF59-481D-A7EE-C96A067A93F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85DB8A7A-FF59-481D-A7EE-C96A067A93F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85DB8A7A-FF59-481D-A7EE-C96A067A93F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85DB8A7A-FF59-481D-A7EE-C96A067A93F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB59899E-702C-41E9-949D-EA5843FCC1A5}
+	EndGlobalSection
+EndGlobal
