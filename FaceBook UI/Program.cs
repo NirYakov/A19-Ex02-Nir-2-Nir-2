@@ -4,7 +4,6 @@ using System.Windows.Forms;
 namespace WinFormUI
 {
     //// Good Luck for us ;)
-    /// LALALALALA!
     public static class Program
     {
         [STAThread]
