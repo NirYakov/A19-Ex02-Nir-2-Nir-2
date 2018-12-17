@@ -64,27 +64,27 @@ namespace WinFormUI
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
          {
-            //if (radioButtonAlphabetical.Checked || radioButtonLikes.Checked)
-            //{
-            //    listboxTotalPosts.DataSource = r_postAnalysis.SortByParameter((sender as RadioButton).Text);
-            //}
-            //else
-            //{
-            //    listboxTotalPosts.DataSource = r_postAnalysis.SortRecent();
-            //}
-
-            if (radioButtonAlphabetical.Checked)
+            if (radioButtonAlphabetical.Checked || radioButtonLikes.Checked)
             {
-                listboxTotalPosts.DataSource = r_postAnalysis.SortAlphabetical();
-            }
-            else if (radioButtonLikes.Checked)
-            {
-                listboxTotalPosts.DataSource = r_postAnalysis.SortByNumOfLikes();
+                listboxTotalPosts.DataSource = r_postAnalysis.SortByParameter((sender as RadioButton).Text);
             }
             else
             {
                 listboxTotalPosts.DataSource = r_postAnalysis.SortRecent();
             }
+
+            //if (radioButtonAlphabetical.Checked)
+            //{
+            //    listboxTotalPosts.DataSource = r_postAnalysis.SortAlphabetical();
+            //}
+            //else if (radioButtonLikes.Checked)
+            //{
+            //    listboxTotalPosts.DataSource = r_postAnalysis.SortByNumOfLikes();
+            //}
+            //else
+            //{
+            //    listboxTotalPosts.DataSource = r_postAnalysis.SortRecent();
+            //}
         }
     }
 }
