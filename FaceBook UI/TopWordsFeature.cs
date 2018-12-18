@@ -15,9 +15,14 @@ namespace WinFormUI
             InitializeComponent();
             InitializeCustomeComponent();
             r_postAnalysis = new PostAnalysis(i_User);
-            listboxTotalPosts.DataSource = r_postAnalysis.PostsListStr;
-            labelSumTot.Text = listboxTotalPosts.Items.Count.ToString();
+            updateListBoxPosts();
             PopulateListBoxTopWords();
+        }
+
+        private void updateListBoxPosts()
+         {
+            listBoxTopWords.DisplayMember = "Message";
+            labelSumTot.Text = listboxTotalPosts.Items.Count.ToString();
         }
 
         private void InitializeCustomeComponent()
@@ -43,23 +48,32 @@ namespace WinFormUI
             listBoxTopWords.DisplayMember = "Key";
             listBoxTopWords.ValueMember = "Value";
         }
-        
-        private void listboxTotalPosts_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            int index = this.listboxTotalPosts.IndexFromPoint(e.Location);
-            if (index != System.Windows.Forms.ListBox.NoMatches)
-            {
-                FormPostSummary formPostSummary = new FormPostSummary(r_postAnalysis.PostsList[index]);
-                formPostSummary.ShowDialog();
-            }
-        }
 
         private void textBoxWordToAnalysis_TextChanged(object sender, EventArgs e)
         {
             radioButtonRecent.Checked = true;
             string wordToAnalysis = textBoxWordToAnalysis.Text;
-            listboxTotalPosts.DataSource = r_postAnalysis.GetPostsByWord(wordToAnalysis);
+            List<Post> listToShow = r_postAnalysis.GetPostsByWord2(wordToAnalysis);
+            listboxTotalPosts.DataSource = new BindingSource(r_postAnalysis.GetPostsByWord2(wordToAnalysis), null);
+            listboxTotalPosts.DisplayMember = "Message";
+
             labelSumTot.Text = listboxTotalPosts.Items.Count.ToString();
+        }
+
+        private void listboxTotalPosts_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+            if (listboxTotalPosts.SelectedItem != null)
+            {
+                FormPostSummary formPostSummary = new FormPostSummary((Post)listboxTotalPosts.SelectedItem);
+                formPostSummary.ShowDialog();
+            }
+            //            int index = this.listboxTotalPosts.IndexFromPoint(e.Location);
+            //            if (index != System.Windows.Forms.ListBox.NoMatches)
+            //            {
+            //                FormPostSummary formPostSummary = new FormPostSummary(r_postAnalysis.PostsList[index]);
+            //                formPostSummary.ShowDialog();
+            //            }
         }
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)

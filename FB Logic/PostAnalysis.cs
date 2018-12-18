@@ -10,14 +10,15 @@ namespace FB_Logic
     {
         public User TheUser { get; set; }
 
-        public List<string> PostsListStr { get; set; }
+        public List<string> PostsListStr { get; set; } // kill
 
         public List<Post> PostsList { get; set; }
 
         public PostAnalysis(User i_User)
         {
             TheUser = i_User;
-            PostsListStr = this.fetchPostsToStringList();
+            initPostList();
+            PostsListStr = this.fetchPostsToStringList(); //kill
         }
 
         public List<string> SortRecent()
@@ -45,7 +46,19 @@ namespace FB_Logic
             PostsList = dummyList;
             return postResult;
         }
-             
+
+        public List<Post> GetPostsByWord2(string i_WordToSearch)
+        {
+            List<Post> filterdPostList = new List<Post>();
+            foreach (Post post in PostsList)
+            {
+                if (post.Message.ToLower().Contains(i_WordToSearch.ToLower()))
+                {
+                    filterdPostList.Add(post);
+                }
+            }
+            return filterdPostList;
+        }
         public List<string> GetPostsByWord(string i_WordToSearch)
         {
             List<string> postResult = new List<string>();
@@ -67,7 +80,19 @@ namespace FB_Logic
             return postResult;
         }
 
-        private List<string> fetchPostsToStringList()
+        private void initPostList()
+        {
+            PostsList = new List<Post>();
+            foreach (Post post in TheUser.Posts)
+            {
+                if (post.Message != null)
+                {
+                    PostsList.Add(post);
+                }
+            }
+        }
+
+        private List<string> fetchPostsToStringList() // kill
         {
             List<string> postResult = new List<string>();
             PostsList = new List<Post>();
