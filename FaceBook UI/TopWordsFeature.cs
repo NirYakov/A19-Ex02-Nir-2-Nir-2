@@ -53,8 +53,8 @@ namespace WinFormUI
         {
             radioButtonRecent.Checked = true;
             string wordToAnalysis = textBoxWordToAnalysis.Text;
-            List<Post> listToShow = r_postAnalysis.GetPostsByWord2(wordToAnalysis);
-            listboxTotalPosts.DataSource = new BindingSource(r_postAnalysis.GetPostsByWord2(wordToAnalysis), null);
+            List<Post> listToShow = r_postAnalysis.GetPostsByWord(wordToAnalysis);
+            listboxTotalPosts.DataSource = new BindingSource(r_postAnalysis.GetPostsByWord(wordToAnalysis), null);
             listboxTotalPosts.DisplayMember = "Message";
 
             labelSumTot.Text = listboxTotalPosts.Items.Count.ToString();
@@ -68,23 +68,17 @@ namespace WinFormUI
                 FormPostSummary formPostSummary = new FormPostSummary((Post)listboxTotalPosts.SelectedItem);
                 formPostSummary.ShowDialog();
             }
-            //            int index = this.listboxTotalPosts.IndexFromPoint(e.Location);
-            //            if (index != System.Windows.Forms.ListBox.NoMatches)
-            //            {
-            //                FormPostSummary formPostSummary = new FormPostSummary(r_postAnalysis.PostsList[index]);
-            //                formPostSummary.ShowDialog();
-            //            }
         }
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
          {
             if (radioButtonAlphabetical.Checked || radioButtonLikes.Checked)
             {
-                listboxTotalPosts.DataSource = r_postAnalysis.SortByParameter((sender as RadioButton).Text);
+      //          listboxTotalPosts.DataSource = r_postAnalysis.SortByParameter((sender as RadioButton).Text);
             }
             else
             {
-                listboxTotalPosts.DataSource = r_postAnalysis.SortRecent();
+       //         listboxTotalPosts.DataSource = r_postAnalysis.SortRecent();
             }
 
             //if (radioButtonAlphabetical.Checked)
