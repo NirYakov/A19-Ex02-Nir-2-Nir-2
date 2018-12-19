@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using FB_Logic;
 using FacebookWrapper.ObjectModel;
+using System.Threading;
 
 namespace WinFormUI
 {
@@ -76,16 +77,19 @@ namespace WinFormUI
 
         private void linkFriends_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            fetchFriends();
+            new Thread(fetchFriends).Start();
+
+            // fetchFriends();
         }
 
         private void fetchFriends()
         {
-            listBoxFriends.Items.Clear();
+            listBoxFriends.Invoke( new Action (listBoxFriends.Items.Clear));
             listBoxFriends.DisplayMember = "Name";
             foreach (User friend in r_UserManager.User.Friends)
             {
-                listBoxFriends.Items.Add(friend);
+                listBoxFriends.Invoke( new Action(() => listBoxFriends.Items.Add(friend)));
+                // listBoxFriends.Items.Add(friend);
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
@@ -96,7 +100,7 @@ namespace WinFormUI
             }
             else
             {
-                labelFriendsNum.Text = friendsNumber.ToString();
+                labelFriendsNum.Invoke(new Action(() => labelFriendsNum.Text = friendsNumber.ToString()));
             }
         }
 
