@@ -84,8 +84,7 @@ namespace WinFormUI
 
         private void fetchFriends()
         {
-            listBoxFriends.Invoke( new Action (listBoxFriends.Items.Clear));
-            listBoxFriends.DisplayMember = "Name";
+            listBoxFriends.Invoke(new Action(() => { listBoxFriends.Items.Clear(); listBoxFriends.DisplayMember = "Name"; } ));
             foreach (User friend in r_UserManager.User.Friends)
             {
                 listBoxFriends.Invoke( new Action(() => listBoxFriends.Items.Add(friend)));
