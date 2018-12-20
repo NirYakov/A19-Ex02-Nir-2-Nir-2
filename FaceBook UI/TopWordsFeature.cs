@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FB_Logic;
 using FacebookWrapper.ObjectModel;
 using System.Windows.Forms;
@@ -51,13 +52,11 @@ namespace WinFormUI
 
         private void textBoxWordToAnalysis_TextChanged(object sender, EventArgs e)
         {
-            radioButtonRecent.Checked = true;
             string wordToAnalysis = textBoxWordToAnalysis.Text;
-            List<Post> listToShow = r_postAnalysis.GetPostsByWord(wordToAnalysis);
             listboxTotalPosts.DataSource = new BindingSource(r_postAnalysis.GetPostsByWord(wordToAnalysis), null);
             listboxTotalPosts.DisplayMember = "Message";
-
             labelSumTot.Text = listboxTotalPosts.Items.Count.ToString();
+            radioButtons_CheckedChanged(null, null);
         }
 
         private void listboxTotalPosts_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -71,28 +70,27 @@ namespace WinFormUI
         }
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
-         {
-            if (radioButtonAlphabetical.Checked || radioButtonLikes.Checked)
+        {
+            string sortMethod = String.Empty;
+            List<Post> listToSort = listboxTotalPosts.Items.OfType<Post>().ToList();
+
+            if (radioButtonAlphabetical.Checked)
             {
-      //          listboxTotalPosts.DataSource = r_postAnalysis.SortByParameter((sender as RadioButton).Text);
+                sortMethod = radioButtonAlphabetical.Text;
+            }
+             else if (radioButtonLikes.Checked)
+            {
+                sortMethod = radioButtonLikes.Text;
             }
             else
             {
-       //         listboxTotalPosts.DataSource = r_postAnalysis.SortRecent();
+                sortMethod = radioButtonRecent.Text;
             }
 
-            //if (radioButtonAlphabetical.Checked)
-            //{
-            //    listboxTotalPosts.DataSource = r_postAnalysis.SortAlphabetical();
-            //}
-            //else if (radioButtonLikes.Checked)
-            //{
-            //    listboxTotalPosts.DataSource = r_postAnalysis.SortByNumOfLikes();
-            //}
-            //else
-            //{
-            //    listboxTotalPosts.DataSource = r_postAnalysis.SortRecent();
-            //}
+            listboxTotalPosts.DataSource = r_postAnalysis.SortByParameter(sortMethod, listToSort);
+
+
         }
     }
 }
+//test

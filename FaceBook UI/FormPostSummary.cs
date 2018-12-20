@@ -25,6 +25,7 @@ namespace WinFormUI
             }
 
             labelNumOfLikes.Text = ThePost.LikedBy.Count.ToString();
+            dateTimePicker1.Value = new DateTime( ThePost.UpdateTime.Value.Ticks);
         }
 
         private void linkToPostOnFB_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -37,6 +38,11 @@ namespace WinFormUI
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

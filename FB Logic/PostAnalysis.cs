@@ -18,32 +18,6 @@ namespace FB_Logic
             initPostList();
         }
 
-//        public List<string> SortRecent()
-//        {
-//            List<string> postResult = this.fetchPostsToStringList();
-//            return postResult;
-//        }
-
-//        public List<string> SortAlphabetical()
-//        {
-//            List<string> postResult = PostsListStr;
-//            List<Post> dummyList = PostsList;
-//            postResult.Sort();
-//            dummyList.Sort(new SortPostAlphabetical());
-//            PostsList = dummyList;
-//            return postResult;
-//        }
-        
-//        public List<string> SortByNumOfLikes()
-//        {
-//            List<string> postResult = PostsListStr;
-//            List<Post> dummyList = PostsList;
-//            postResult.Sort();
-//            dummyList.Sort(new SortPostByLikes());
-//            PostsList = dummyList;
-//            return postResult;
-//        }
-        
         public List<Post> GetPostsByWord(string i_WordToSearch)
         {
             List<Post> filterdPostList = new List<Post>();
@@ -104,14 +78,12 @@ namespace FB_Logic
             return (from wp in occurrences.OrderByDescending(kvp => kvp.Value) select wp).Take(k).ToDictionary(kw => kw.Key, kw => kw.Value);
         }
 
-//        public List<string> SortByParameter(string i_SortKindName)
-//        {
-//            List<string> postResult = PostsListStr;
-//            List<Post> dummyList = PostsList;
-//            postResult.Sort();
-//            dummyList.Sort(FactoryPostSorts.SortMethod(i_SortKindName));
-//            PostsList = dummyList;
-//            return postResult;
-//        }
+        public List<Post> SortByParameter(string i_SortKindName, List<Post> i_DisplayedPosts)
+        {
+            List<Post> sortedList = new List<Post>();
+            sortedList = i_DisplayedPosts;
+            sortedList.Sort(FactoryPostSorts.SortMethod(i_SortKindName));
+            return sortedList;
+        }
     }
 }

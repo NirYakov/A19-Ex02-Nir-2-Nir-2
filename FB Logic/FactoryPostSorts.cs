@@ -20,7 +20,7 @@ namespace FB_Logic
             switch (i_SortName)
             {
                 case recent:
-                   // sortMethod = new SortPostByLikes();
+                    sortMethod = new SortPostByRecent();
                     break;
                 case likes:
                     sortMethod = new SortPostByLikes();
