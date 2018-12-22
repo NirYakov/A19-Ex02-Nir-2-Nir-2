@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Net;
+using System.Threading;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FB_Logic;
@@ -86,11 +87,15 @@ by given fields , and sort the best to top.";
 
         private void buttonBringFriends_Click(object sender, EventArgs e)
         {
+            new Thread(new ThreadStart(bringFriendsAndLoadTheFriendsList)).Start();
+        }
+
+        private void bringFriendsAndLoadTheFriendsList()
+        {
             try
             {
                 const float ptbInterval = 0.85f;
                 PictureTopBar ptb;
-                flowLayoutPanelFriends.Controls.Clear();
 
                 foreach (User friend in r_UserAnalysis.UserIn.Friends)
                 {
@@ -98,7 +103,7 @@ by given fields , and sort the best to top.";
                     ptb.MyUserAnalysis.UserIn = friend;
                     ptb.AddToClickEvent(pictureTopBar_Click);
                     r_PictureTopBars.Add(ptb);
-                    flowLayoutPanelFriends.Controls.Add(ptb);
+                    flowLayoutPanelFriends.Invoke(new Action(() => flowLayoutPanelFriends.Controls.Add(ptb)));
                     friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
                 }
 
@@ -161,14 +166,21 @@ by given fields , and sort the best to top.";
 
         private void buttonInteraction_Click(object sender, EventArgs e)
         {
+            new Thread(new ThreadStart(interactionCalc)).Start();
+        }
+
+        private void interactionCalc()
+        {
             try
             {
                 if (m_LoadedUserAnalysis.UserIn != null)
                 {
                     const bool pictureInteraction = true;
 
-                    labelNameInteraction.Text = m_LoadedUserAnalysis.UserIn.Name;
-                    calculateAndFillDataUser();
+                    labelNameInteraction.Invoke(new Action(() =>
+                    labelNameInteraction.Text = m_LoadedUserAnalysis.UserIn.Name));
+
+                    this.Invoke(new Action(() => calculateAndFillDataUser()));
 
                     m_LoadedUserAnalysis.MyStars.CalulateStars(
                         !pictureInteraction,
@@ -178,9 +190,13 @@ by given fields , and sort the best to top.";
                         m_LoadedUserAnalysis.TaggedInteraction
                         );
 
-                    labelGoldStarsInteraction.Text = m_LoadedUserAnalysis.MyStars.GoldenStars.ToString();
-                    labelNormalStarsInteraction.Text = m_LoadedUserAnalysis.MyStars.NormalStars.ToString();
-                    buttonSaveToFile.Enabled = true;
+                    labelGoldStarsInteraction.Invoke(new Action(() =>
+                    labelGoldStarsInteraction.Text = m_LoadedUserAnalysis.MyStars.GoldenStars.ToString()));
+
+                    labelNormalStarsInteraction.Invoke(new Action(() =>
+                    labelNormalStarsInteraction.Text = m_LoadedUserAnalysis.MyStars.NormalStars.ToString()));
+
+                    buttonSaveToFile.Invoke(new Action(() => buttonSaveToFile.Enabled = true));
                 }
             }
             catch (Exception)
@@ -268,6 +284,11 @@ Try Later");
 
         private void buttonActiveSort_Click(object sender, EventArgs e)
         {
+            new Thread(new ThreadStart(activeSortWithParameters)).Start();
+        }
+
+        private void activeSortWithParameters()
+        {
             UserAnalysis.eStarsParameters chosenParams = sortParametersPicked();
             if (chosenParams != UserAnalysis.eStarsParameters.None)
             {
@@ -279,12 +300,13 @@ Try Later");
                     }
 
                     r_PictureTopBars.Sort(new PictureTopBarStarSort());
-                    flowLayoutPanelFriends.Controls.Clear();
+                    flowLayoutPanelFriends.Invoke(new Action (() => flowLayoutPanelFriends.Controls.Clear()));
                     foreach (PictureTopBar item in r_PictureTopBars)
                     {
+                        item.Invoke(new Action(() =>
                         item.LabelText.Text = string.Format("{0} Gold ,{1} normal stars"
-                            , item.MyUserAnalysis.MyStars.GoldenStars, item.MyUserAnalysis.MyStars.NormalStars);
-                        flowLayoutPanelFriends.Controls.Add(item);
+                            , item.MyUserAnalysis.MyStars.GoldenStars, item.MyUserAnalysis.MyStars.NormalStars)));
+                        flowLayoutPanelFriends.Invoke(new Action(() => flowLayoutPanelFriends.Controls.Add(item))); 
                     }
                 }
                 catch (Exception)
@@ -311,6 +333,11 @@ Try Later");
         }
 
         private void bringAndLoadAlbums()
+        {
+            bringPickedUserAlbums();
+        }
+
+        private void bringPickedUserAlbums()
         {
             List<ItemInfo> allAlbums = (List<ItemInfo>)m_PicutresManager.BringAllAlbums();
             int index = 0;
@@ -428,6 +455,12 @@ Try Later");
                 UserAnalysisLoaded = m_LoadedUserAnalysis
             }).ShowDialog();
             this.Show();
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            new Thread(new ThreadStart(() => bringFriendsAndLoadTheFriendsList())).Start();
         }
 
         private class PictureTopBarStarSort : IComparer<PictureTopBar>
