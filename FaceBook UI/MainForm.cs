@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using FB_Logic;
@@ -136,6 +137,20 @@ namespace WinFormUI
                 labelPostsNum.Text = postsNum.ToString();
             }
         }
+
+        private List<Post> getPostsList()
+        {
+            List<Post>  PostsList = new List<Post>();
+            foreach (Post post in r_UserManager.User.Posts)
+            {
+                if (post.Message != null)
+                {
+                    PostsList.Add(post);
+                }
+            }
+            return PostsList;
+        }
+
 
         private void listBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -292,10 +307,11 @@ Plase try later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         private void btnFeature2_Click(object sender, EventArgs e)
         {
-            TopWordsFeature featureTwo = new TopWordsFeature(r_UserManager.User);
+            List<Post> postsList = getPostsList();
+            TopWordsFeature featureTwo = new TopWordsFeature(postsList);
             featureTwo.ShowDialog();
         }
-
+    
         private void btnFeature1_Click(object sender, EventArgs e)
         {
             this.Hide();

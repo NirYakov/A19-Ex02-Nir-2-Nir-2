@@ -18,6 +18,10 @@ namespace FB_Logic
             initPostList();
         }
 
+        public PostAnalysis()
+        {
+        }
+
         public List<Post> GetPostsByWord(string i_WordToSearch)
         {
             List<Post> filterdPostList = new List<Post>();
@@ -43,18 +47,6 @@ namespace FB_Logic
             }
         }
 
-        private List<string> setPostToStringList()
-        {
-            List<string> listResult = new List<string>();
-            foreach (Post post in PostsList)
-            {
-                if (post.Message != null)
-                {
-                    listResult.Add(post.Message);
-                }
-            }
-            return listResult;
-        }
         public Dictionary<string, int> GetTopKWords()
         {
             int k = 15;
@@ -76,6 +68,19 @@ namespace FB_Logic
             }
 
             return (from wp in occurrences.OrderByDescending(kvp => kvp.Value) select wp).Take(k).ToDictionary(kw => kw.Key, kw => kw.Value);
+        }
+
+        private List<string> setPostToStringList()
+        {
+            List<string> listResult = new List<string>();
+            foreach (Post post in PostsList)
+            {
+                if (post.Message != null)
+                {
+                    listResult.Add(post.Message);
+                }
+            }
+            return listResult;
         }
 
         public List<Post> SortByParameter(string i_SortKindName, List<Post> i_DisplayedPosts)

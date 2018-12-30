@@ -9,13 +9,13 @@ namespace WinFormUI
 {
     public partial class TopWordsFeature : Form
     {
-        private readonly PostAnalysis r_postAnalysis;
+        private readonly ProxyPostAnalisys r_postAnalysis;
 
-        public TopWordsFeature(User i_User)
+        public TopWordsFeature(List<Post> offlinePostsList)
         {
             InitializeComponent();
             InitializeCustomeComponent();
-            r_postAnalysis = new PostAnalysis(i_User);
+            r_postAnalysis = new ProxyPostAnalisys(offlinePostsList);
             updateListBoxPosts();
             PopulateListBoxTopWords();
         }
@@ -39,12 +39,12 @@ namespace WinFormUI
         {
             string stringToSearch = listBoxTopWords.GetItemText(listBoxTopWords.SelectedItem);
             textBoxWordToAnalysis.Text = stringToSearch;
-        }
+        } 
 
         private void PopulateListBoxTopWords()
         {
             listBoxTopWords.Items.Clear();
-            Dictionary<string, int> topWords = r_postAnalysis.GetTopKWords();
+            Dictionary<string, int> topWords = r_postAnalysis. GetTopKWords();
             listBoxTopWords.DataSource = new BindingSource(topWords, null);
             listBoxTopWords.DisplayMember = "Key";
             listBoxTopWords.ValueMember = "Value";

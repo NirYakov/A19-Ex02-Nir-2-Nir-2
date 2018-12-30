@@ -49,11 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPostAnalysis.cs" />
     <Compile Include="PostSortsClasses.cs" />
     <Compile Include="FactoryPostSorts.cs" />
     <Compile Include="PicturesManager.cs" />
     <Compile Include="PictureAnalysis.cs" />
     <Compile Include="PostAnalysis.cs" />
+    <Compile Include="ProxyPostAnalisys.cs" />
     <Compile Include="Stars.cs" />
     <Compile Include="UserAnalysis.cs" />
     <Compile Include="UserManager.cs" />
