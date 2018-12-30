@@ -3,13 +3,13 @@ using FacebookWrapper.ObjectModel;
 
 namespace FB_Logic
 {
-    public class ProxyPostAnalisys : PostAnalysis, IPostAnalysis
+    public class ProxyPostAnalisys : PostAnalysis
     {
         private List<Post> m_offlinePostsList;
 
-        public ProxyPostAnalisys(List<Post> i_offlinePostsList)
+        public ProxyPostAnalisys(List<Post> i_OfflinePostsList)
         {
-            m_offlinePostsList = i_offlinePostsList;
+            m_offlinePostsList = i_OfflinePostsList;
             initPostList();
         }
 
