@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloneMachine.cs" />
     <Compile Include="PostSortsClasses.cs" />
     <Compile Include="FactoryPostSorts.cs" />
     <Compile Include="PicturesManager.cs" />
