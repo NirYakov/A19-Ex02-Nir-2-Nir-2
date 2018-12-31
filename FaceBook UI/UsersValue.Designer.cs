@@ -103,13 +103,12 @@
             // buttonBringFriends
             // 
             this.buttonBringFriends.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonBringFriends.Location = new System.Drawing.Point(15, 26);
+            this.buttonBringFriends.Location = new System.Drawing.Point(14, 27);
             this.buttonBringFriends.Name = "buttonBringFriends";
             this.buttonBringFriends.Size = new System.Drawing.Size(148, 73);
             this.buttonBringFriends.TabIndex = 10;
             this.buttonBringFriends.Text = "Bring\r\n&Friends";
             this.buttonBringFriends.UseVisualStyleBackColor = true;
-            this.buttonBringFriends.Visible = false;
             this.buttonBringFriends.Click += new System.EventHandler(this.buttonBringFriends_Click);
             // 
             // labelBDay
