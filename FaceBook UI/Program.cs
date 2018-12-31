@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace WinFormUI
 {
-    //// Good Luck for us ;)
+    //// Good Luck for us ;))
     public static class Program
     {
         [STAThread]
