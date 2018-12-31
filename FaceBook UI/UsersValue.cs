@@ -18,6 +18,8 @@ namespace WinFormUI
         private UserAnalysis m_LoadedUserAnalysis;
         private PicturesManager m_PicutresManager;
         private int m_InitSortGroupBoxHeight = 0;
+        private const float k_PtbSizeInterval = 0.80f;
+        private PictureTopBar m_UserInPtb;
         private string k_BringAlbumsString =
 @"Bring
 {0}
@@ -75,6 +77,12 @@ by given fields , and sort the best to top.";
 
             buttonHelp.BackColor = r_BackColor;
             buttonHelp.ForeColor = r_ForeColor;
+
+            m_UserInPtb = new PictureTopBar { Size = new Size((int)(200 * k_PtbSizeInterval), (int)(250 * k_PtbSizeInterval)) };
+            m_UserInPtb.LabelText.Text = m_LoadedUserAnalysis.UserIn.Name;
+            m_UserInPtb.Picture.Image = pictureBoxLaodedUser.Image;
+            m_UserInPtb.AddToClickEvent(pictureTopBar_Click);
+            flowLayoutPanelFriends.Controls.Add(m_UserInPtb);
         }
 
         private void initListView()
@@ -94,12 +102,11 @@ by given fields , and sort the best to top.";
         {
             try
             {
-                const float ptbInterval = 0.85f;
                 PictureTopBar ptb;
 
                 foreach (User friend in r_UserAnalysis.UserIn.Friends)
                 {
-                    ptb = newPictureTopBar(ptbInterval, string.Format("{0}", friend.Name), friend.PictureLargeURL);
+                    ptb = newPictureTopBar( string.Format("{0}", friend.Name), friend.PictureLargeURL);
                     ptb.MyUserAnalysis.UserIn = friend;
                     ptb.AddToClickEvent(pictureTopBar_Click);
                     r_PictureTopBars.Add(ptb);
@@ -121,11 +128,9 @@ by given fields , and sort the best to top.";
             }
         }
 
-        private PictureTopBar newPictureTopBar(float i_SizeInterval, string i_LabelTitle, string i_PictureUrl)
+        private PictureTopBar newPictureTopBar(string i_LabelTitle, string i_PictureUrl)
         {
-            PictureTopBar ptb = new PictureTopBar() { Size = new Size((int)(200 * i_SizeInterval), (int)(250 * i_SizeInterval)) };
-            ptb.TopPanel.BackColor = r_BackColor;
-            ptb.LabelText.ForeColor = r_ForeColor;
+            PictureTopBar ptb = m_UserInPtb.DeepClone();
             ptb.Picture.LoadAsync(i_PictureUrl);
             ptb.LabelText.Text = i_LabelTitle;
             return ptb;
@@ -300,13 +305,13 @@ Try Later");
                     }
 
                     r_PictureTopBars.Sort(new PictureTopBarStarSort());
-                    flowLayoutPanelFriends.Invoke(new Action (() => flowLayoutPanelFriends.Controls.Clear()));
+                    flowLayoutPanelFriends.Invoke(new Action(() => flowLayoutPanelFriends.Controls.Clear()));
                     foreach (PictureTopBar item in r_PictureTopBars)
                     {
                         item.Invoke(new Action(() =>
                         item.LabelText.Text = string.Format("{0} Gold ,{1} normal stars"
                             , item.MyUserAnalysis.MyStars.GoldenStars, item.MyUserAnalysis.MyStars.NormalStars)));
-                        flowLayoutPanelFriends.Invoke(new Action(() => flowLayoutPanelFriends.Controls.Add(item))); 
+                        flowLayoutPanelFriends.Invoke(new Action(() => flowLayoutPanelFriends.Controls.Add(item)));
                     }
                 }
                 catch (Exception)
@@ -384,11 +389,10 @@ Try Later");
                     ICollection<PictureAnalysis> pictureAnalyses =
                         fillPictureAnalysisListAndSortByStars(index);
 
-                    const float ptbInterval = 0.80f;
                     foreach (PictureAnalysis item in pictureAnalyses)
                     {
                         flowLayoutPanelPickedUserPictures.Controls.Add(
-                            newPictureTopBar(ptbInterval, item.ToString(), item.PictureUrl));
+                            newPictureTopBar(item.ToString(), item.PictureUrl));
                     }
                 }
             }
